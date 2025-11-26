@@ -16,7 +16,7 @@ jobs:
         run: echo "Password de producción:${{ secrets.PROD_PASSWORD }}"
 
       - name: Simular deploy
-        run: |
+        run: 
           echo "Desplegando app..."
           sleep 2
           echo "Deploy completado correctamente 🚀"

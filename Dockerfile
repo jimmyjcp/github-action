@@ -1,18 +1,16 @@
 # Etapa 1: construir el JAR con Maven
-FROM eclipse-temurin:17-jdk AS build
+FROM maven:3.9-eclipse-temurin-17 AS build
 
 WORKDIR /app
 
-# Copiar el descriptor de Maven
+# Copiar el pom y descargar dependencias (cache)
 COPY pom.xml .
-
-# Descargar dependencias (esto ayuda al cache)
 RUN mvn -B dependency:go-offline
 
 # Copiar el código fuente
 COPY src ./src
 
-# Construir el proyecto (salta tests para ir más rápido aquí)
+# Compilar y empaquetar (sin tests para ir más rápido)
 RUN mvn -B package -DskipTests
 
 # Etapa 2: imagen ligera solo con el JAR
@@ -20,8 +18,8 @@ FROM eclipse-temurin:17-jre
 
 WORKDIR /app
 
-# Copiar el JAR desde la etapa de build
-COPY --from=build /app/target/github-actions-java-1.0-SNAPSHOT.jar app.jar
+# Copiar el JAR generado
+COPY --from=build /app/target/*.jar app.jar
 
 # Comando de arranque
 ENTRYPOINT ["java", "-jar", "app.jar"]

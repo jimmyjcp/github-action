@@ -1,0 +1,23 @@
+name: Deploy a producción
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    
+    steps:
+      - name: Mostrar mensaje de inicio
+        run: echo "Iniciando deploy a producción..."
+
+      - name: Mostrar secret enmascarado
+        run: echo "Password de producción: ${{ secrets.PROD_PASSWORD }}"
+
+
+      - name: Simular deploy
+        run: |
+          echo "Desplegando app..."
+          sleep 2
+          echo "Deploy completado correctamente 🚀"

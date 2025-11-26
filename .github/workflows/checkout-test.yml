@@ -1,0 +1,20 @@
+name: Probando checkout y comandos
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-checkout:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Mostrar archivos del repo
+        run: ls -la
+
+      - name: Mostrar el contenido del README si existe
+        run: cat README.md || echo "No hay README"

@@ -20,7 +20,12 @@ public class App {
     }
 
     @GetMapping("/suma")
-    public int suma(@RequestParam int a, @RequestParam int b) {
+    public int sumaEndpoint(@RequestParam int a, @RequestParam int b) {
+        return sumar(a, b);
+    }
+
+    // 👇 Este método es el que reclama AppTest
+    public static int sumar(int a, int b) {
         return a + b;
     }
 }
